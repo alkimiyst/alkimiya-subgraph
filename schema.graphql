@@ -1,0 +1,13 @@
+type MinerStatus @entity {
+  id: ID!,
+  sands: String,
+  reward: BigInt,
+  balance: BigInt,
+  updated: BigInt,
+  minerHashrate: BigInt,
+  minerReward: BigInt,
+  poolHashrate: BigInt,
+  poolReward: BigInt,
+  day: Int,
+  defaulted: Boolean
+}
