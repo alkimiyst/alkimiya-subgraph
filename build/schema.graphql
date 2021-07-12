@@ -12,8 +12,9 @@ type MinerStatus @entity {
   defaulted: Boolean
 }
 
-type HashSands @entity {
+type HashSand @entity {
   id: ID!,
+  contractAddress: String,
   period: BigInt,  
   hashrate: BigInt,  
   price: BigInt  

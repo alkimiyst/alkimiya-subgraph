@@ -197,7 +197,7 @@ export class MinerStatus extends Entity {
   }
 }
 
-export class HashSands extends Entity {
+export class HashSand extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -205,17 +205,17 @@ export class HashSands extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save HashSands entity without an ID");
+    assert(id !== null, "Cannot save HashSand entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save HashSands entity with non-string ID. " +
+      "Cannot save HashSand entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("HashSands", id.toString(), this);
+    store.set("HashSand", id.toString(), this);
   }
 
-  static load(id: string): HashSands | null {
-    return store.get("HashSands", id) as HashSands | null;
+  static load(id: string): HashSand | null {
+    return store.get("HashSand", id) as HashSand | null;
   }
 
   get id(): string {
@@ -225,6 +225,23 @@ export class HashSands extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get contractAddress(): string | null {
+    let value = this.get("contractAddress");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contractAddress(value: string | null) {
+    if (value === null) {
+      this.unset("contractAddress");
+    } else {
+      this.set("contractAddress", Value.fromString(value as string));
+    }
   }
 
   get period(): BigInt | null {
