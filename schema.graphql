@@ -11,3 +11,10 @@ type MinerStatus @entity {
   day: Int,
   defaulted: Boolean
 }
+
+type HashSands @entity {
+  id: ID!,
+  period: BigInt,  
+  hashrate: BigInt,  
+  price: BigInt  
+}

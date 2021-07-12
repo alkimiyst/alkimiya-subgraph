@@ -5,10 +5,29 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Alkimiya
+    name: HashSand
     network: mainnet
     source:
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+      abi: HashSandFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: HashSand/HashSand.wasm
+      entities:
+        - HashSands
+      abis:
+        - name: HashSandFactory
+          file: HashSand/abis/HashSandFactory.json
+      eventHandlers:
+        - event: NewHashSandContract(indexed address)
+          handler: handleNewHashSand
+  - kind: ethereum/contract
+    name: Oracle
+    network: mainnet
+    source:
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
       abi: Oracle
     mapping:
       kind: ethereum/events
@@ -18,8 +37,8 @@ dataSources:
         - MinerStatus
       abis:
         - name: Oracle
-          file: Alkimiya/abis/Oracle.json
+          file: Oracle/abis/Oracle.json
       eventHandlers:
         - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool)
           handler: handleMinerStatusUpdated
-      file: Alkimiya/Alkimiya.wasm
+      file: Oracle/Oracle.wasm

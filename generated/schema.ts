@@ -196,3 +196,85 @@ export class MinerStatus extends Entity {
     this.set("defaulted", Value.fromBoolean(value));
   }
 }
+
+export class HashSands extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save HashSands entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save HashSands entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("HashSands", id.toString(), this);
+  }
+
+  static load(id: string): HashSands | null {
+    return store.get("HashSands", id) as HashSands | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get period(): BigInt | null {
+    let value = this.get("period");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set period(value: BigInt | null) {
+    if (value === null) {
+      this.unset("period");
+    } else {
+      this.set("period", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get hashrate(): BigInt | null {
+    let value = this.get("hashrate");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set hashrate(value: BigInt | null) {
+    if (value === null) {
+      this.unset("hashrate");
+    } else {
+      this.set("hashrate", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get price(): BigInt | null {
+    let value = this.get("price");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (value === null) {
+      this.unset("price");
+    } else {
+      this.set("price", Value.fromBigInt(value as BigInt));
+    }
+  }
+}
