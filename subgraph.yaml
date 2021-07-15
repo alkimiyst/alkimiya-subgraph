@@ -7,9 +7,9 @@ dataSources:
   # hashsands subgraph
   - kind: ethereum/contract
     name: HashSand
-    network: mainnet
+    network: rinkeby
     source:
-      address: '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e'
+      address: '0x79537f5B5536B2528f4431ad9bf9D141463914d3'
       abi: HashSandFactory
     mapping:
       kind: ethereum/events
@@ -27,9 +27,9 @@ dataSources:
   # oracle subgraph
   - kind: ethereum/contract
     name: Oracle
-    network: mainnet
+    network: rinkeby
     source:
-      address: '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853'
+      address: '0x17E721421313F026cF0A372db47C65f4415Ab286'
       abi: Oracle
     mapping:
       kind: ethereum/events
