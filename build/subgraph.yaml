@@ -8,7 +8,7 @@ dataSources:
     name: HashSand
     network: rinkeby
     source:
-      address: "0xDeC3d5Ed1d7264cfB3108898B5Ea8E1F81e9A6C4"
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
       abi: HashSandFactory
     mapping:
       kind: ethereum/events
@@ -27,7 +27,7 @@ dataSources:
     name: Oracle
     network: rinkeby
     source:
-      address: "0x17E721421313F026cF0A372db47C65f4415Ab286"
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
       abi: Oracle
     mapping:
       kind: ethereum/events

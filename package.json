@@ -8,7 +8,7 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy alkimiya/alkimiya-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy alkimiya/alkimiya-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+    "deploy-local": "graph deploy alkimiya/alkimiya-subgraph --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.1",
