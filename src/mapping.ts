@@ -21,5 +21,6 @@ export function handleMinerStatusUpdated(event: MinerStatsUpdated): void {
 export function handleNewHashSand(event: NewHashSandContract): void {
   let sands = new HashSand(event.params.contractAddress.toHex());
   sands.contractAddress = event.params.contractAddress.toHexString();
+  sands.minerAddress = event.params.minerAddress.toHexString();
   sands.save();
 }

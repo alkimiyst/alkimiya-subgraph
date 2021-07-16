@@ -18,6 +18,12 @@
         "internalType": "address",
         "name": "contractAddress",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "minerAddress",
+        "type": "address"
       }
     ],
     "name": "NewHashSandContract",

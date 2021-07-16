@@ -26,6 +26,10 @@ export class NewHashSandContract__Params {
   get contractAddress(): Address {
     return this._event.parameters[0].value.toAddress();
   }
+
+  get minerAddress(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
 }
 
 export class OwnershipTransferred extends ethereum.Event {

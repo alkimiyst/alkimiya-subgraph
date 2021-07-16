@@ -9,7 +9,7 @@ dataSources:
     name: HashSand
     network: rinkeby
     source:
-      address: '0x79537f5B5536B2528f4431ad9bf9D141463914d3'
+      address: '0xDeC3d5Ed1d7264cfB3108898B5Ea8E1F81e9A6C4'
       abi: HashSandFactory
     mapping:
       kind: ethereum/events
@@ -22,7 +22,7 @@ dataSources:
         - name: HashSandFactory
           file: ./abis/HashSandFactory.json
       eventHandlers:
-        - event: NewHashSandContract(indexed address)
+        - event: NewHashSandContract(indexed address,indexed address)
           handler: handleNewHashSand
   # oracle subgraph
   - kind: ethereum/contract

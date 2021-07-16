@@ -294,4 +294,21 @@ export class HashSand extends Entity {
       this.set("price", Value.fromBigInt(value as BigInt));
     }
   }
+
+  get minerAddress(): string | null {
+    let value = this.get("minerAddress");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set minerAddress(value: string | null) {
+    if (value === null) {
+      this.unset("minerAddress");
+    } else {
+      this.set("minerAddress", Value.fromString(value as string));
+    }
+  }
 }

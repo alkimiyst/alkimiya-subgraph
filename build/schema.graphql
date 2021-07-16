@@ -17,5 +17,6 @@ type HashSand @entity {
   contractAddress: String,
   period: BigInt,  
   hashrate: BigInt,  
-  price: BigInt  
+  price: BigInt, 
+  minerAddress: String
 }
