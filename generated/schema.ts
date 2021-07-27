@@ -59,8 +59,8 @@ export class MinerStatus extends Entity {
     }
   }
 
-  get reward(): BigInt | null {
-    let value = this.get("reward");
+  get due(): BigInt | null {
+    let value = this.get("due");
     if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -68,11 +68,28 @@ export class MinerStatus extends Entity {
     }
   }
 
-  set reward(value: BigInt | null) {
+  set due(value: BigInt | null) {
     if (value === null) {
-      this.unset("reward");
+      this.unset("due");
     } else {
-      this.set("reward", Value.fromBigInt(value as BigInt));
+      this.set("due", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get lastDueFulfilled(): BigInt | null {
+    let value = this.get("lastDueFulfilled");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastDueFulfilled(value: BigInt | null) {
+    if (value === null) {
+      this.unset("lastDueFulfilled");
+    } else {
+      this.set("lastDueFulfilled", Value.fromBigInt(value as BigInt));
     }
   }
 

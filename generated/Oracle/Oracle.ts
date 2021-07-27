@@ -27,40 +27,44 @@ export class MinerStatsUpdated__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get reward(): BigInt {
+  get due(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get balance(): BigInt {
+  get lastDueFulfilled(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get updated(): BigInt {
+  get balance(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
-  get minerHashrate(): BigInt {
+  get updated(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
 
-  get minerReward(): BigInt {
+  get minerHashrate(): BigInt {
     return this._event.parameters[5].value.toBigInt();
   }
 
-  get poolHashrate(): BigInt {
+  get minerReward(): BigInt {
     return this._event.parameters[6].value.toBigInt();
   }
 
-  get poolReward(): BigInt {
+  get poolHashrate(): BigInt {
     return this._event.parameters[7].value.toBigInt();
   }
 
+  get poolReward(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
+
   get day(): i32 {
-    return this._event.parameters[8].value.toI32();
+    return this._event.parameters[9].value.toI32();
   }
 
   get defaulted(): boolean {
-    return this._event.parameters[9].value.toBoolean();
+    return this._event.parameters[10].value.toBoolean();
   }
 }
 
@@ -91,21 +95,24 @@ export class Oracle__minerResult {
   value0: Address;
   value1: BigInt;
   value2: BigInt;
-  value3: i32;
-  value4: boolean;
+  value3: BigInt;
+  value4: i32;
+  value5: boolean;
 
   constructor(
     value0: Address,
     value1: BigInt,
     value2: BigInt,
-    value3: i32,
-    value4: boolean
+    value3: BigInt,
+    value4: i32,
+    value5: boolean
   ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
     this.value3 = value3;
     this.value4 = value4;
+    this.value5 = value5;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -113,11 +120,12 @@ export class Oracle__minerResult {
     map.set("value0", ethereum.Value.fromAddress(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set(
-      "value3",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value3))
+      "value4",
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value4))
     );
-    map.set("value4", ethereum.Value.fromBoolean(this.value4));
+    map.set("value5", ethereum.Value.fromBoolean(this.value5));
     return map;
   }
 }
@@ -165,7 +173,7 @@ export class Oracle extends ethereum.SmartContract {
   miner(param0: Address): Oracle__minerResult {
     let result = super.call(
       "miner",
-      "miner(address):(address,uint256,uint256,uint8,bool)",
+      "miner(address):(address,uint256,uint256,uint256,uint8,bool)",
       [ethereum.Value.fromAddress(param0)]
     );
 
@@ -173,15 +181,16 @@ export class Oracle extends ethereum.SmartContract {
       result[0].toAddress(),
       result[1].toBigInt(),
       result[2].toBigInt(),
-      result[3].toI32(),
-      result[4].toBoolean()
+      result[3].toBigInt(),
+      result[4].toI32(),
+      result[5].toBoolean()
     );
   }
 
   try_miner(param0: Address): ethereum.CallResult<Oracle__minerResult> {
     let result = super.tryCall(
       "miner",
-      "miner(address):(address,uint256,uint256,uint8,bool)",
+      "miner(address):(address,uint256,uint256,uint256,uint8,bool)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -193,8 +202,9 @@ export class Oracle extends ethereum.SmartContract {
         value[0].toAddress(),
         value[1].toBigInt(),
         value[2].toBigInt(),
-        value[3].toI32(),
-        value[4].toBoolean()
+        value[3].toBigInt(),
+        value[4].toI32(),
+        value[5].toBoolean()
       )
     );
   }

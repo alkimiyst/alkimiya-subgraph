@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.3
 description: Alkimiya Subgraph for Ethereum
 repository: https://github.com/alkimiya/alkimiya-subgraph
 schema:
@@ -7,7 +7,7 @@ dataSources:
   # hashsands subgraph
   - kind: ethereum/contract
     name: HashSand
-    network: rinkeby
+    network: mainnet
     source:
       address: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
       abi: HashSandFactory
@@ -27,7 +27,7 @@ dataSources:
   # oracle subgraph
   - kind: ethereum/contract
     name: Oracle
-    network: rinkeby
+    network: mainnet
     source:
       address: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'
       abi: Oracle
@@ -41,6 +41,6 @@ dataSources:
         - name: Oracle
           file: ./abis/Oracle.json
       eventHandlers:
-        - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool)
+        - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool)
           handler: handleMinerStatusUpdated
       file: ./src/mapping.ts

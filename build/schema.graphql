@@ -1,7 +1,8 @@
 type MinerStatus @entity {
   id: ID!,
   sands: String,
-  reward: BigInt,
+  due: BigInt,
+  lastDueFulfilled: BigInt,
   balance: BigInt,
   updated: BigInt,
   minerHashrate: BigInt,

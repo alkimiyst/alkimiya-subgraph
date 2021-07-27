@@ -23,11 +23,11 @@ export class NewHashSandContract__Params {
     this._event = event;
   }
 
-  get contractAddress(): Address {
+  get minerAddress(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get minerAddress(): Address {
+  get contractAddress(): Address {
     return this._event.parameters[1].value.toAddress();
   }
 }

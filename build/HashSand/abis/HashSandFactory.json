@@ -16,13 +16,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "contractAddress",
+        "name": "minerAddress",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "minerAddress",
+        "name": "contractAddress",
         "type": "address"
       }
     ],

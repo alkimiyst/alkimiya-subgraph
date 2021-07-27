@@ -22,7 +22,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "reward",
+        "name": "due",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastDueFulfilled",
         "type": "uint256"
       },
       {
@@ -89,12 +95,12 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "reward",
+        "name": "due",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "updated",
+        "name": "lastDueFulfilled",
         "type": "uint256"
       },
       {
@@ -128,7 +134,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "reward",
+        "name": "due",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastDueFulfilled",
         "type": "uint256"
       },
       {
