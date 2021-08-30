@@ -27,40 +27,122 @@ export class MinerStatsUpdated__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get reward(): BigInt {
+  get due(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get balance(): BigInt {
+  get lastDueFulfilled(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get updated(): BigInt {
+  get balance(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
-  get minerHashrate(): BigInt {
+  get updated(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
 
-  get minerReward(): BigInt {
+  get minerHashrate(): BigInt {
     return this._event.parameters[5].value.toBigInt();
   }
 
-  get poolHashrate(): BigInt {
+  get minerReward(): BigInt {
     return this._event.parameters[6].value.toBigInt();
   }
 
-  get poolReward(): BigInt {
+  get poolHashrate(): BigInt {
     return this._event.parameters[7].value.toBigInt();
   }
 
+  get poolReward(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
+
   get day(): i32 {
-    return this._event.parameters[8].value.toI32();
+    return this._event.parameters[9].value.toI32();
   }
 
   get defaulted(): boolean {
-    return this._event.parameters[9].value.toBoolean();
+    return this._event.parameters[10].value.toBoolean();
+  }
+}
+
+export class RoleAdminChanged extends ethereum.Event {
+  get params(): RoleAdminChanged__Params {
+    return new RoleAdminChanged__Params(this);
+  }
+}
+
+export class RoleAdminChanged__Params {
+  _event: RoleAdminChanged;
+
+  constructor(event: RoleAdminChanged) {
+    this._event = event;
+  }
+
+  get role(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get previousAdminRole(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get newAdminRole(): Bytes {
+    return this._event.parameters[2].value.toBytes();
+  }
+}
+
+export class RoleGranted extends ethereum.Event {
+  get params(): RoleGranted__Params {
+    return new RoleGranted__Params(this);
+  }
+}
+
+export class RoleGranted__Params {
+  _event: RoleGranted;
+
+  constructor(event: RoleGranted) {
+    this._event = event;
+  }
+
+  get role(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get sender(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+}
+
+export class RoleRevoked extends ethereum.Event {
+  get params(): RoleRevoked__Params {
+    return new RoleRevoked__Params(this);
+  }
+}
+
+export class RoleRevoked__Params {
+  _event: RoleRevoked;
+
+  constructor(event: RoleRevoked) {
+    this._event = event;
+  }
+
+  get role(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get sender(): Address {
+    return this._event.parameters[2].value.toAddress();
   }
 }
 
@@ -91,21 +173,24 @@ export class Oracle__minerResult {
   value0: Address;
   value1: BigInt;
   value2: BigInt;
-  value3: i32;
-  value4: boolean;
+  value3: BigInt;
+  value4: i32;
+  value5: boolean;
 
   constructor(
     value0: Address,
     value1: BigInt,
     value2: BigInt,
-    value3: i32,
-    value4: boolean
+    value3: BigInt,
+    value4: i32,
+    value5: boolean
   ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
     this.value3 = value3;
     this.value4 = value4;
+    this.value5 = value5;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -113,11 +198,12 @@ export class Oracle__minerResult {
     map.set("value0", ethereum.Value.fromAddress(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set(
-      "value3",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value3))
+      "value4",
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value4))
     );
-    map.set("value4", ethereum.Value.fromBoolean(this.value4));
+    map.set("value5", ethereum.Value.fromBoolean(this.value5));
     return map;
   }
 }
@@ -125,6 +211,69 @@ export class Oracle__minerResult {
 export class Oracle extends ethereum.SmartContract {
   static bind(address: Address): Oracle {
     return new Oracle("Oracle", address);
+  }
+
+  DEFAULT_ADMIN_ROLE(): Bytes {
+    let result = super.call(
+      "DEFAULT_ADMIN_ROLE",
+      "DEFAULT_ADMIN_ROLE():(bytes32)",
+      []
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_DEFAULT_ADMIN_ROLE(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "DEFAULT_ADMIN_ROLE",
+      "DEFAULT_ADMIN_ROLE():(bytes32)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  PUBLISHER_ROLE(): Bytes {
+    let result = super.call("PUBLISHER_ROLE", "PUBLISHER_ROLE():(bytes32)", []);
+
+    return result[0].toBytes();
+  }
+
+  try_PUBLISHER_ROLE(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "PUBLISHER_ROLE",
+      "PUBLISHER_ROLE():(bytes32)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  getRoleAdmin(role: Bytes): Bytes {
+    let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
+      ethereum.Value.fromFixedBytes(role)
+    ]);
+
+    return result[0].toBytes();
+  }
+
+  try_getRoleAdmin(role: Bytes): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "getRoleAdmin",
+      "getRoleAdmin(bytes32):(bytes32)",
+      [ethereum.Value.fromFixedBytes(role)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   getStats(sands: Address): Oracle__getStatsResult {
@@ -162,10 +311,31 @@ export class Oracle extends ethereum.SmartContract {
     );
   }
 
+  hasRole(role: Bytes, account: Address): boolean {
+    let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
+      ethereum.Value.fromFixedBytes(role),
+      ethereum.Value.fromAddress(account)
+    ]);
+
+    return result[0].toBoolean();
+  }
+
+  try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall("hasRole", "hasRole(bytes32,address):(bool)", [
+      ethereum.Value.fromFixedBytes(role),
+      ethereum.Value.fromAddress(account)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
   miner(param0: Address): Oracle__minerResult {
     let result = super.call(
       "miner",
-      "miner(address):(address,uint256,uint256,uint8,bool)",
+      "miner(address):(address,uint256,uint256,uint256,uint8,bool)",
       [ethereum.Value.fromAddress(param0)]
     );
 
@@ -173,15 +343,16 @@ export class Oracle extends ethereum.SmartContract {
       result[0].toAddress(),
       result[1].toBigInt(),
       result[2].toBigInt(),
-      result[3].toI32(),
-      result[4].toBoolean()
+      result[3].toBigInt(),
+      result[4].toI32(),
+      result[5].toBoolean()
     );
   }
 
   try_miner(param0: Address): ethereum.CallResult<Oracle__minerResult> {
     let result = super.tryCall(
       "miner",
-      "miner(address):(address,uint256,uint256,uint8,bool)",
+      "miner(address):(address,uint256,uint256,uint256,uint8,bool)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -193,8 +364,9 @@ export class Oracle extends ethereum.SmartContract {
         value[0].toAddress(),
         value[1].toBigInt(),
         value[2].toBigInt(),
-        value[3].toI32(),
-        value[4].toBoolean()
+        value[3].toBigInt(),
+        value[4].toI32(),
+        value[5].toBoolean()
       )
     );
   }
@@ -214,19 +386,27 @@ export class Oracle extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  owner(): Address {
-    let result = super.call("owner", "owner():(address)", []);
+  supportsInterface(interfaceId: Bytes): boolean {
+    let result = super.call(
+      "supportsInterface",
+      "supportsInterface(bytes4):(bool)",
+      [ethereum.Value.fromFixedBytes(interfaceId)]
+    );
 
-    return result[0].toAddress();
+    return result[0].toBoolean();
   }
 
-  try_owner(): ethereum.CallResult<Address> {
-    let result = super.tryCall("owner", "owner():(address)", []);
+  try_supportsInterface(interfaceId: Bytes): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "supportsInterface",
+      "supportsInterface(bytes4):(bool)",
+      [ethereum.Value.fromFixedBytes(interfaceId)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   updateMinerStats(
@@ -234,17 +414,21 @@ export class Oracle extends ethereum.SmartContract {
     minerHashrate: BigInt,
     minerReward: BigInt,
     poolHashrate: BigInt,
-    poolReward: BigInt
+    poolReward: BigInt,
+    timestamp: BigInt,
+    signature: Bytes
   ): boolean {
     let result = super.call(
       "updateMinerStats",
-      "updateMinerStats(address,uint256,uint256,uint256,uint256):(bool)",
+      "updateMinerStats(address,uint256,uint256,uint256,uint256,uint256,bytes):(bool)",
       [
         ethereum.Value.fromAddress(sands),
         ethereum.Value.fromUnsignedBigInt(minerHashrate),
         ethereum.Value.fromUnsignedBigInt(minerReward),
         ethereum.Value.fromUnsignedBigInt(poolHashrate),
-        ethereum.Value.fromUnsignedBigInt(poolReward)
+        ethereum.Value.fromUnsignedBigInt(poolReward),
+        ethereum.Value.fromUnsignedBigInt(timestamp),
+        ethereum.Value.fromBytes(signature)
       ]
     );
 
@@ -256,17 +440,21 @@ export class Oracle extends ethereum.SmartContract {
     minerHashrate: BigInt,
     minerReward: BigInt,
     poolHashrate: BigInt,
-    poolReward: BigInt
+    poolReward: BigInt,
+    timestamp: BigInt,
+    signature: Bytes
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "updateMinerStats",
-      "updateMinerStats(address,uint256,uint256,uint256,uint256):(bool)",
+      "updateMinerStats(address,uint256,uint256,uint256,uint256,uint256,bytes):(bool)",
       [
         ethereum.Value.fromAddress(sands),
         ethereum.Value.fromUnsignedBigInt(minerHashrate),
         ethereum.Value.fromUnsignedBigInt(minerReward),
         ethereum.Value.fromUnsignedBigInt(poolHashrate),
-        ethereum.Value.fromUnsignedBigInt(poolReward)
+        ethereum.Value.fromUnsignedBigInt(poolReward),
+        ethereum.Value.fromUnsignedBigInt(timestamp),
+        ethereum.Value.fromBytes(signature)
       ]
     );
     if (result.reverted) {
@@ -307,6 +495,108 @@ export class ConstructorCall__Outputs {
   }
 }
 
+export class GrantRoleCall extends ethereum.Call {
+  get inputs(): GrantRoleCall__Inputs {
+    return new GrantRoleCall__Inputs(this);
+  }
+
+  get outputs(): GrantRoleCall__Outputs {
+    return new GrantRoleCall__Outputs(this);
+  }
+}
+
+export class GrantRoleCall__Inputs {
+  _call: GrantRoleCall;
+
+  constructor(call: GrantRoleCall) {
+    this._call = call;
+  }
+
+  get role(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+
+  get account(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class GrantRoleCall__Outputs {
+  _call: GrantRoleCall;
+
+  constructor(call: GrantRoleCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceRoleCall extends ethereum.Call {
+  get inputs(): RenounceRoleCall__Inputs {
+    return new RenounceRoleCall__Inputs(this);
+  }
+
+  get outputs(): RenounceRoleCall__Outputs {
+    return new RenounceRoleCall__Outputs(this);
+  }
+}
+
+export class RenounceRoleCall__Inputs {
+  _call: RenounceRoleCall;
+
+  constructor(call: RenounceRoleCall) {
+    this._call = call;
+  }
+
+  get role(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+
+  get account(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class RenounceRoleCall__Outputs {
+  _call: RenounceRoleCall;
+
+  constructor(call: RenounceRoleCall) {
+    this._call = call;
+  }
+}
+
+export class RevokeRoleCall extends ethereum.Call {
+  get inputs(): RevokeRoleCall__Inputs {
+    return new RevokeRoleCall__Inputs(this);
+  }
+
+  get outputs(): RevokeRoleCall__Outputs {
+    return new RevokeRoleCall__Outputs(this);
+  }
+}
+
+export class RevokeRoleCall__Inputs {
+  _call: RevokeRoleCall;
+
+  constructor(call: RevokeRoleCall) {
+    this._call = call;
+  }
+
+  get role(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+
+  get account(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class RevokeRoleCall__Outputs {
+  _call: RevokeRoleCall;
+
+  constructor(call: RevokeRoleCall) {
+    this._call = call;
+  }
+}
+
 export class UpdateMinerStatsCall extends ethereum.Call {
   get inputs(): UpdateMinerStatsCall__Inputs {
     return new UpdateMinerStatsCall__Inputs(this);
@@ -342,6 +632,14 @@ export class UpdateMinerStatsCall__Inputs {
 
   get poolReward(): BigInt {
     return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get signature(): Bytes {
+    return this._call.inputValues[6].value.toBytes();
   }
 }
 

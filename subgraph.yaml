@@ -29,7 +29,7 @@ dataSources:
     name: Oracle
     network: rinkeby
     source:
-      address: '0x17E721421313F026cF0A372db47C65f4415Ab286'
+      address: '0x279C0c7044b1A9D9B3a901620726f290A5c0617F'
       abi: Oracle
     mapping:
       kind: ethereum/events
@@ -41,6 +41,6 @@ dataSources:
         - name: Oracle
           file: ./abis/Oracle.json
       eventHandlers:
-        - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool)
+        - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool) 
           handler: handleMinerStatusUpdated
       file: ./src/mapping.ts
