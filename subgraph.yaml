@@ -7,13 +7,13 @@ dataSources:
   # hashsands subgraph
   - kind: ethereum/contract
     name: HashSand
-    network: rinkeby
+    network: mainnet
     source:
-      address: '0xDeC3d5Ed1d7264cfB3108898B5Ea8E1F81e9A6C4'
+      address: "0x0165878A594ca255338adfa4d48449f69242Eb8F"
       abi: HashSandFactory
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/mapping.ts
       entities:
@@ -22,18 +22,18 @@ dataSources:
         - name: HashSandFactory
           file: ./abis/HashSandFactory.json
       eventHandlers:
-        - event: NewHashSandContract(indexed address,indexed address)
+        - event: NewHashSandContract(indexed address,indexed address,address,address,uint256,uint256,uint256,uint256,indexed address)
           handler: handleNewHashSand
   # oracle subgraph
   - kind: ethereum/contract
     name: Oracle
-    network: rinkeby
+    network: mainnet
     source:
-      address: '0x279C0c7044b1A9D9B3a901620726f290A5c0617F'
+      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
       abi: Oracle
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - MinerStatus
@@ -41,6 +41,26 @@ dataSources:
         - name: Oracle
           file: ./abis/Oracle.json
       eventHandlers:
-        - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool) 
+        - event: MinerStatsUpdated(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint8,bool)
           handler: handleMinerStatusUpdated
+      file: ./src/mapping.ts
+  # hashrepo subgraph
+  - kind: ethereum/contract
+    name: HashRepo
+    network: mainnet
+    source:
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
+      abi: HashRepoFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - HashRepo
+      abis:
+        - name: HashRepoFactory
+          file: ./abis/HashRepoFactory.json
+      eventHandlers:
+        - event: NewHashRepo(indexed address,indexed address,string,string,address)
+          handler: handleNewHashRepo
       file: ./src/mapping.ts

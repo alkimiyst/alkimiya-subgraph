@@ -1,6 +1,7 @@
-import { HashSand, MinerStatus } from "../generated/schema";
+import { HashRepo, HashSand, MinerStatus } from "../generated/schema";
 import { NewHashSandContract } from "../generated/HashSand/HashSandFactory";
 import { MinerStatsUpdated } from "../generated/Oracle/Oracle";
+import { NewHashRepo } from "../generated/HashRepo/HashRepoFactory";
 
 export function handleMinerStatusUpdated(event: MinerStatsUpdated): void {
   let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
@@ -20,7 +21,25 @@ export function handleMinerStatusUpdated(event: MinerStatsUpdated): void {
 
 export function handleNewHashSand(event: NewHashSandContract): void {
   let sands = new HashSand(event.params.contractAddress.toHex());
-  sands.contractAddress = event.params.contractAddress.toHexString();
   sands.minerAddress = event.params.minerAddress.toHexString();
+  sands.contractAddress = event.params.contractAddress.toHexString();
+  sands.paymentTokenAddress = event.params.paymentTokenAddress.toHexString();
+  sands.collateralTokenAddress =
+    event.params.collateralTokenAddress.toHexString();
+  sands.hashrate = event.params.hashrate;
+  sands.period = event.params.period;
+  sands.reservedPrice = event.params.reservedPrice;
+  sands.minimumThreshold = event.params.minimumThreshold;
+  sands.hashRepoAddress = event.params.hashRepoAddress.toHexString();
   sands.save();
+}
+
+export function handleNewHashRepo(event: NewHashRepo): void {
+  let repo = new HashRepo(event.params.contractAddress.toHex());
+  repo.contractAddress = event.params.contractAddress.toHexString();
+  repo.minerAddress = event.params.minerAddress.toHexString();
+  repo.minerId = event.params.minerId;
+  repo.miningPool = event.params.miningPool;
+  repo.erc20TokenAddress = event.params.erc20TokenAddress.toHexString();
+  repo.save();
 }

@@ -1,22 +1,35 @@
 type MinerStatus @entity {
-  id: ID!,
-  sands: String,
-  due: BigInt,
-  balance: BigInt,
-  updated: BigInt,
-  minerHashrate: BigInt,
-  minerReward: BigInt,
-  poolHashrate: BigInt,
-  poolReward: BigInt,
-  day: Int,
+  id: ID!
+  sands: String
+  due: BigInt
+  balance: BigInt
+  updated: BigInt
+  minerHashrate: BigInt
+  minerReward: BigInt
+  poolHashrate: BigInt
+  poolReward: BigInt
+  day: Int
   defaulted: Boolean
 }
 
 type HashSand @entity {
-  id: ID!,
-  contractAddress: String,
-  period: BigInt,  
-  hashrate: BigInt,  
-  price: BigInt, 
+  id: ID!
   minerAddress: String
+  contractAddress: String
+  paymentTokenAddress: String
+  collateralTokenAddress: String
+  hashrate: BigInt
+  period: BigInt
+  reservedPrice: BigInt
+  minimumThreshold: BigInt
+  hashRepoAddress: String
+}
+
+type HashRepo @entity {
+  id: ID!
+  contractAddress: String
+  minerAddress: String
+  minerId: String
+  miningPool: String
+  erc20TokenAddress: String
 }
