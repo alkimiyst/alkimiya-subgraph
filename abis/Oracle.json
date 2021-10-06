@@ -1,5 +1,4 @@
 {
-  "address": "0x279C0c7044b1A9D9B3a901620726f290A5c0617F",
   "_format": "hh-sol-artifact-1",
   "contractName": "Oracle",
   "sourceName": "contracts/Oracle.sol",
