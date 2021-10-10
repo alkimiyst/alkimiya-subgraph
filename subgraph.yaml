@@ -13,7 +13,7 @@ dataSources:
       abi: HashSandFactory
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/mapping.ts
       entities:
@@ -33,7 +33,7 @@ dataSources:
       abi: Oracle
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - MinerStatus
