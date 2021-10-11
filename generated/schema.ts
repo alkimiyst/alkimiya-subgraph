@@ -16,26 +16,31 @@ export class MinerStatus extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("day", Value.fromI32(0));
+    this.set("defaulted", Value.fromBoolean(false));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save MinerStatus entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save MinerStatus entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("MinerStatus", id.toString(), this);
+    assert(id != null, "Cannot save MinerStatus entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save MinerStatus entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("MinerStatus", id.toString(), this);
+    }
   }
 
   static load(id: string): MinerStatus | null {
-    return store.get("MinerStatus", id) as MinerStatus | null;
+    return changetype<MinerStatus | null>(store.get("MinerStatus", id));
   }
 
   get id(): string {
     let value = this.get("id");
-    return value.toString();
+    return value!.toString();
   }
 
   set id(value: string) {
@@ -44,7 +49,7 @@ export class MinerStatus extends Entity {
 
   get sands(): string | null {
     let value = this.get("sands");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toString();
@@ -52,16 +57,16 @@ export class MinerStatus extends Entity {
   }
 
   set sands(value: string | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("sands");
     } else {
-      this.set("sands", Value.fromString(value as string));
+      this.set("sands", Value.fromString(<string>value));
     }
   }
 
   get due(): BigInt | null {
     let value = this.get("due");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -69,16 +74,16 @@ export class MinerStatus extends Entity {
   }
 
   set due(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("due");
     } else {
-      this.set("due", Value.fromBigInt(value as BigInt));
+      this.set("due", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get balance(): BigInt | null {
     let value = this.get("balance");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -86,16 +91,16 @@ export class MinerStatus extends Entity {
   }
 
   set balance(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("balance");
     } else {
-      this.set("balance", Value.fromBigInt(value as BigInt));
+      this.set("balance", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get updated(): BigInt | null {
     let value = this.get("updated");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -103,16 +108,16 @@ export class MinerStatus extends Entity {
   }
 
   set updated(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("updated");
     } else {
-      this.set("updated", Value.fromBigInt(value as BigInt));
+      this.set("updated", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get minerHashrate(): BigInt | null {
     let value = this.get("minerHashrate");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -120,16 +125,16 @@ export class MinerStatus extends Entity {
   }
 
   set minerHashrate(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("minerHashrate");
     } else {
-      this.set("minerHashrate", Value.fromBigInt(value as BigInt));
+      this.set("minerHashrate", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get minerReward(): BigInt | null {
     let value = this.get("minerReward");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -137,16 +142,16 @@ export class MinerStatus extends Entity {
   }
 
   set minerReward(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("minerReward");
     } else {
-      this.set("minerReward", Value.fromBigInt(value as BigInt));
+      this.set("minerReward", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get poolHashrate(): BigInt | null {
     let value = this.get("poolHashrate");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -154,16 +159,16 @@ export class MinerStatus extends Entity {
   }
 
   set poolHashrate(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("poolHashrate");
     } else {
-      this.set("poolHashrate", Value.fromBigInt(value as BigInt));
+      this.set("poolHashrate", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get poolReward(): BigInt | null {
     let value = this.get("poolReward");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -171,16 +176,16 @@ export class MinerStatus extends Entity {
   }
 
   set poolReward(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("poolReward");
     } else {
-      this.set("poolReward", Value.fromBigInt(value as BigInt));
+      this.set("poolReward", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get day(): i32 {
     let value = this.get("day");
-    return value.toI32();
+    return value!.toI32();
   }
 
   set day(value: i32) {
@@ -189,7 +194,7 @@ export class MinerStatus extends Entity {
 
   get defaulted(): boolean {
     let value = this.get("defaulted");
-    return value.toBoolean();
+    return value!.toBoolean();
   }
 
   set defaulted(value: boolean) {
@@ -205,22 +210,24 @@ export class HashSand extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save HashSand entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save HashSand entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("HashSand", id.toString(), this);
+    assert(id != null, "Cannot save HashSand entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save HashSand entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("HashSand", id.toString(), this);
+    }
   }
 
   static load(id: string): HashSand | null {
-    return store.get("HashSand", id) as HashSand | null;
+    return changetype<HashSand | null>(store.get("HashSand", id));
   }
 
   get id(): string {
     let value = this.get("id");
-    return value.toString();
+    return value!.toString();
   }
 
   set id(value: string) {
@@ -229,7 +236,7 @@ export class HashSand extends Entity {
 
   get contractAddress(): string | null {
     let value = this.get("contractAddress");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toString();
@@ -237,16 +244,16 @@ export class HashSand extends Entity {
   }
 
   set contractAddress(value: string | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("contractAddress");
     } else {
-      this.set("contractAddress", Value.fromString(value as string));
+      this.set("contractAddress", Value.fromString(<string>value));
     }
   }
 
   get period(): BigInt | null {
     let value = this.get("period");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -254,16 +261,16 @@ export class HashSand extends Entity {
   }
 
   set period(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("period");
     } else {
-      this.set("period", Value.fromBigInt(value as BigInt));
+      this.set("period", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get hashrate(): BigInt | null {
     let value = this.get("hashrate");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -271,16 +278,16 @@ export class HashSand extends Entity {
   }
 
   set hashrate(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("hashrate");
     } else {
-      this.set("hashrate", Value.fromBigInt(value as BigInt));
+      this.set("hashrate", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get price(): BigInt | null {
     let value = this.get("price");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -288,16 +295,16 @@ export class HashSand extends Entity {
   }
 
   set price(value: BigInt | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("price");
     } else {
-      this.set("price", Value.fromBigInt(value as BigInt));
+      this.set("price", Value.fromBigInt(<BigInt>value));
     }
   }
 
   get minerAddress(): string | null {
     let value = this.get("minerAddress");
-    if (value === null || value.kind == ValueKind.NULL) {
+    if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toString();
@@ -305,10 +312,10 @@ export class HashSand extends Entity {
   }
 
   set minerAddress(value: string | null) {
-    if (value === null) {
+    if (!value) {
       this.unset("minerAddress");
     } else {
-      this.set("minerAddress", Value.fromString(value as string));
+      this.set("minerAddress", Value.fromString(<string>value));
     }
   }
 }
