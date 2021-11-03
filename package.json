@@ -2,17 +2,16 @@
   "name": "alkimiya-subgraph",
   "version": "0.1.0",
   "scripts": {
-    "build-contract": "solc contracts/Gravity.sol --abi -o abis --overwrite && solc contracts/Gravity.sol --bin -o bin --overwrite",
-    "create": "graph create alkimiya/alkimiya-subgraph --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create alkimiya/alkimiya-subgraph --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy alkimiya/alkimiya-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy alkimiya/alkimiya-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ alkimiya",
+    "create-local": "graph create --node http://localhost:8020/ alkimiya",
+    "remove-local": "graph remove --node http://localhost:8020/ alkimiya",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 alkimiya"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.20.1",
-    "@graphprotocol/graph-ts": "^0.20.0"
+    "@graphprotocol/graph-cli": "^0.22.1",
+    "@graphprotocol/graph-ts": "^0.22.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

@@ -1,22 +1,15 @@
-type MinerStatus @entity {
-  id: ID!,
-  sands: String,
-  due: BigInt,
-  balance: BigInt,
-  updated: BigInt,
-  minerHashrate: BigInt,
-  minerReward: BigInt,
-  poolHashrate: BigInt,
-  poolReward: BigInt,
-  day: Int,
-  defaulted: Boolean
+type OracleUpdate @entity {
+  id: ID!
+  referenceDay: BigInt
+  referenceBlock: BigInt
+  hashrate: BigInt
+  reward: BigInt
+  timestamp: BigInt
 }
 
-type HashSand @entity {
-  id: ID!,
-  contractAddress: String,
-  period: BigInt,  
-  hashrate: BigInt,  
-  price: BigInt, 
+type SandsRepo @entity {
+  id: ID!
+  contractAddress: String
   minerAddress: String
+  erc20TokenAddress: String
 }

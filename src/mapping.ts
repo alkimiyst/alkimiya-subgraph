@@ -1,26 +1,23 @@
-import { HashSand, MinerStatus } from "../generated/schema";
-import { NewHashSandContract } from "../generated/HashSand/HashSandFactory";
-import { MinerStatsUpdated } from "../generated/Oracle/Oracle";
+import { SandsRepo, OracleUpdate } from "../generated/schema";
+// import { NewHashSandContract } from "../generated/HashSand/HashSandFactoryLib";
+import { OracleUpdate as NewOracleUpdate } from "../generated/Oracle/Oracle";
+import { NewHashRepo as NewSandsRepo } from "../generated/SandsRepo/SandsRepoFactory";
 
-export function handleMinerStatusUpdated(event: MinerStatsUpdated): void {
+export function handleOracleUpdate(event: NewOracleUpdate): void {
   let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
-  let status = new MinerStatus(id);
-  status.sands = event.params.sands.toHexString();
-  status.due = event.params.due;
-  status.balance = event.params.balance;
-  status.updated = event.params.updated;
-  status.minerHashrate = event.params.minerHashrate;
-  status.minerReward = event.params.minerReward;
-  status.poolHashrate = event.params.poolHashrate;
-  status.poolReward = event.params.poolReward;
-  status.day = event.params.day;
-  status.defaulted = event.params.defaulted;
+  let status = new OracleUpdate(id);
+  status.referenceDay = event.params.referenceDay;
+  status.referenceBlock = event.params.referenceBlock;
+  status.hashrate = event.params.hashrate;
+  status.reward = event.params.reward;
+  status.timestamp = event.params.timestamp;
   status.save();
 }
 
-export function handleNewHashSand(event: NewHashSandContract): void {
-  let sands = new HashSand(event.params.contractAddress.toHex());
-  sands.contractAddress = event.params.contractAddress.toHexString();
-  sands.minerAddress = event.params.minerAddress.toHexString();
-  sands.save();
+export function handleNewSandsRepo(event: NewSandsRepo): void {
+  let repo = new SandsRepo(event.params.contractAddress.toHex());
+  repo.contractAddress = event.params.contractAddress.toHexString();
+  repo.minerAddress = event.params.minerAddress.toHexString();
+  repo.erc20TokenAddress = event.params.erc20TokenAddress.toHexString();
+  repo.save();
 }
