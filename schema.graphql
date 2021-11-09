@@ -1,9 +1,22 @@
-type OracleUpdate @entity {
+type ETHOracleUpdate @entity {
   id: ID!
   referenceDay: BigInt
   referenceBlock: BigInt
   hashrate: BigInt
   reward: BigInt
+  fees: BigInt
+  difficulty: BigInt
+  timestamp: BigInt
+}
+
+type WBTCOracleUpdate @entity {
+  id: ID!
+  referenceDay: BigInt
+  referenceBlock: BigInt
+  hashrate: BigInt
+  reward: BigInt
+  fees: BigInt
+  difficulty: BigInt
   timestamp: BigInt
 }
 

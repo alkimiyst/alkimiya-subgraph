@@ -6,7 +6,7 @@ schema:
 dataSources:
   # oracle subgraph
   - kind: ethereum/contract
-    name: Oracle
+    name: ETHOracle
     network: mainnet
     source:
       address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
@@ -16,13 +16,33 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - OracleUpdate
+        - ETHOracleUpdate
       abis:
         - name: Oracle
           file: ./abis/Oracle.json
       eventHandlers:
-        - event: OracleUpdate(indexed uint256,indexed uint256,uint256,uint256,uint256)
-          handler: handleOracleUpdate
+        - event: OracleUpdate(indexed uint256,indexed uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleETHOracleUpdate
+      file: ./src/mapping.ts
+      # oracle subgraph
+  - kind: ethereum/contract
+    name: WBTCOracle
+    network: mainnet
+    source:
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+      abi: Oracle
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - WBTCOracleUpdate
+      abis:
+        - name: Oracle
+          file: ./abis/Oracle.json
+      eventHandlers:
+        - event: OracleUpdate(indexed uint256,indexed uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleWBTCOracleUpdate
       file: ./src/mapping.ts
   # hashrepo subgraph
   - kind: ethereum/contract
