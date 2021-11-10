@@ -1,8 +1,12 @@
-import { SandsRepo, ETHOracleUpdate, WBTCOracleUpdate } from "../generated/schema";
+import {
+  SandsRepo,
+  ETHOracleUpdate,
+  WBTCOracleUpdate,
+} from "../generated/schema";
 // import { NewHashSandContract } from "../generated/HashSand/HashSandFactoryLib";
 import { OracleUpdate as NewETHOracleUpdate } from "../generated/ETHOracle/Oracle";
 import { OracleUpdate as NewWBTCOracleUpdate } from "../generated/WBTCOracle/Oracle";
-import { NewHashRepo as NewSandsRepo } from "../generated/SandsRepo/SandsRepoFactory";
+import { NewSandsRepo } from "../generated/SandsRepo/SandsRepoFactory";
 
 export function handleETHOracleUpdate(event: NewETHOracleUpdate): void {
   // let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
@@ -35,5 +39,6 @@ export function handleNewSandsRepo(event: NewSandsRepo): void {
   repo.contractAddress = event.params.contractAddress.toHexString();
   repo.minerAddress = event.params.minerAddress.toHexString();
   repo.erc20TokenAddress = event.params.erc20TokenAddress.toHexString();
+  repo.createdAt = event.block.timestamp;
   repo.save();
 }

@@ -44,7 +44,7 @@ dataSources:
         - event: OracleUpdate(indexed uint256,indexed uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleWBTCOracleUpdate
       file: ./src/mapping.ts
-  # hashrepo subgraph
+  # sandsrepo subgraph
   - kind: ethereum/contract
     name: SandsRepo
     network: mainnet
@@ -61,6 +61,6 @@ dataSources:
         - name: SandsRepoFactory
           file: ./abis/SandsRepoFactory.json
       eventHandlers:
-        - event: NewHashRepo(indexed address,indexed address,address)
+        - event: NewSandsRepo(indexed address,indexed address,address)
           handler: handleNewSandsRepo
       file: ./src/mapping.ts
