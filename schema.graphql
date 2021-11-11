@@ -25,5 +25,5 @@ type SandsRepo @entity {
   contractAddress: String
   minerAddress: String
   erc20TokenAddress: String
-  createdAt: BigInt
+  createdAt: BigInt!
 }
