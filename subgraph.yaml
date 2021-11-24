@@ -7,10 +7,11 @@ dataSources:
   # oracle subgraph
   - kind: ethereum/contract
     name: ETHOracle
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+      address: "0xE8cD10Ed6b917a793BcAc165235410D1943D6d0B"
       abi: Oracle
+      startBlock: 9698950
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -27,10 +28,11 @@ dataSources:
       # oracle subgraph
   - kind: ethereum/contract
     name: WBTCOracle
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+      address: "0xdbB1d9ab2f043Cd31F80CeB940dB943503d15715"
       abi: Oracle
+      startBlock: 9698950
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -47,10 +49,11 @@ dataSources:
   # sandsrepo subgraph
   - kind: ethereum/contract
     name: SandsRepo
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
+      address: "0x5D3C3BAa64A4E35134C561997460Ef172856086E"
       abi: SandsRepoFactory
+      startBlock: 9698950
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
