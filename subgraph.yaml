@@ -9,7 +9,7 @@ dataSources:
     name: Oracle
     network: mainnet
     source:
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+      address: "0xE8cD10Ed6b917a793BcAc165235410D1943D6d0B"
       abi: Oracle
     mapping:
       kind: ethereum/events
@@ -29,7 +29,7 @@ dataSources:
     name: SandsRepo
     network: mainnet
     source:
-      address: "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+      address: "0x5D3C3BAa64A4E35134C561997460Ef172856086E"
       abi: SandsRepoFactory
     mapping:
       kind: ethereum/events
